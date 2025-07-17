@@ -8,6 +8,8 @@
 #include "stb_image.h"
 
 unsigned int LoadTexture(std::string path);
+void Framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void ProcessInput(GLFWwindow *window);
 
 int main() {
     if (!glfwInit()) return -1;
@@ -19,6 +21,10 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, Framebuffer_size_callback);
+
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD\n";
         return -1;
@@ -73,6 +79,10 @@ int main() {
     auto texture = LoadTexture("textures/texture.jpeg");
 
     while (!glfwWindowShouldClose(window)) {
+        // process input
+        ProcessInput(window);
+
+        // render
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -91,9 +101,29 @@ int main() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+    glDeleteTextures(1, &texture);
+    testShader.cleanup();
+    textureShader.cleanup();
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
+}
+
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+void ProcessInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void Framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
 }
 
 unsigned int LoadTexture(std::string path)

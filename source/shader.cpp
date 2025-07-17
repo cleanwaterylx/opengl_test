@@ -57,7 +57,15 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
 
 Shader::~Shader()
 {
-    glDeleteProgram(ID);
+    
+}
+
+void Shader::cleanup()
+{
+    if (ID != 0 && glIsProgram(ID)) {
+        glDeleteProgram(ID);
+        ID = 0;
+    }
 }
 
 void Shader::checkCompileErrors(unsigned int shader, std::string type)
