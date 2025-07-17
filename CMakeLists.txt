@@ -7,17 +7,16 @@ set(CMAKE_CXX_STANDARD 17)
 add_subdirectory(3d_party/glad)
 add_subdirectory(3d_party/glfw)
 
-# 查找 OpenGL（系统库）
-find_package(OpenGL REQUIRED)
-
 # 包含头文件
 include_directories(
     3d_party/glad/include
     3d_party/glfw/include
 )
 
+file(GLOB_RECURSE sources "source/*.cpp" "source/*.h")
+
 # 添加可执行文件
-add_executable(OpenGLDemo main.cpp)
+add_executable(OpenGLDemo ${sources})
 
 # 链接库
 target_link_libraries(OpenGLDemo
