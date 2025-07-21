@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.14)
 project(OpenGLDemo)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Debug)
 
 # 添加子模块源码路径
 add_subdirectory(3d_party/glad)
 add_subdirectory(3d_party/glfw)
+add_subdirectory(3d_party/glm)
 
 # 包含头文件
 include_directories(
@@ -22,5 +24,6 @@ add_executable(OpenGLDemo ${sources})
 target_link_libraries(OpenGLDemo
     glad
     glfw
+    glm::glm
     ${OPENGL_gl_LIBRARY}
 )
