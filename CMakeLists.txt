@@ -8,19 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(3d_party/glad)
 add_subdirectory(3d_party/glfw)
 add_subdirectory(3d_party/glm)
-
-set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3d_party/imgui)
-set(IMGUI_SOURCE_FILES
-    ${IMGUI_DIR}/imgui.cpp
-    ${IMGUI_DIR}/imgui_demo.cpp
-    ${IMGUI_DIR}/imgui_draw.cpp
-    ${IMGUI_DIR}/imgui_tables.cpp
-    ${IMGUI_DIR}/imgui_widgets.cpp
- 
-    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
-    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
-)
-add_library(imgui ${IMGUI_SOURCE_FILES})
+add_subdirectory(3d_party/imgui)
 
 # 包含头文件
 include_directories(
